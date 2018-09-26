@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>3D切割轮播图</title>
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .box {
+        width: 560px;
+        height: 300px;
+        margin: 100px auto 0;
+        border: 1px solid #ccc;
+        position: relative;
+    }
+
+    .box .imgBox {
+        list-style: none;
+        width: 100%;
+        height: 100%;
+        /*overflow: hidden;*/
+    }
+
+    .box .imgBox li {
+        /* width: 100%;
+        height: 100%;
+        float: left;*/
+        /*position: absolute;*/
+        width: 112px;
+        height: 100%;
+        float: left;
+        position: relative;
+        /*视距: 显示近大远小的效果*/
+        /*perspective: 500px;*/
+        /*3d呈现*/
+        transform-style: preserve-3d;
+        transition: all 1s;
+    }
+
+    .box .imgBox li span {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: url("images/1.jpg") no-repeat;
+    }
+    /*拼接立体容器*/
+    /*1.立体容器 旋转中心要在电脑平面上*/
+    /*2.立体容器 的每一个面的图片正面朝外*/
+
+    .box .imgBox li span:nth-child(1) {
+        background-image: url("images/1.jpg");
+        transform: translateZ(150px);
+    }
+
+    .box .imgBox li span:nth-child(2) {
+        background-image: url("images/2.jpg");
+        /*旋转过后 轴也会旋转*/
+        transform: rotateX(90deg) translateZ(150px);
+    }
+
+    .box .imgBox li span:nth-child(3) {
+        background-image: url("images/3.jpg");
+        transform: rotateX(180deg) translateZ(150px);
+    }
+
+    .box .imgBox li span:nth-child(4) {
+        background-image: url("images/4.jpg");
+        transform: rotateX(270deg) translateZ(150px);
+    }
+    /*拼接背景*/
+
+    .box .imgBox li:nth-child(1) span {
+        background-position: 0 0;
+    }
+
+    .box .imgBox li:nth-child(2) span {
+        background-position: -112px 0;
+    }
+
+    .box .imgBox li:nth-child(3) span {
+        background-position: -224px 0;
+    }
+
+    .box .imgBox li:nth-child(4) span {
+        background-position: -336px 0;
+    }
+
+    .box .imgBox li:nth-child(5) span {
+        background-position: -448px 0;
+    }
+    /*.box .imgBox li img {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }*/
+
+    .box .left,
+    .box .right {
+        position: absolute;
+        width: 30px;
+        height: 70px;
+        background: rgba(0, 0, 0, .2);
+        top: 115px;
+        text-align: center;
+        line-height: 70px;
+        text-decoration: none;
+        color: #fff;
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    .box .right {
+        right: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- 1.完成这个例子需要用到的知识  -->
+    <!-- 2.回顾3D转换 -->
+    <!-- 3.轴的正方向， translate rotate (3d转换属性 ) -->
+    <!-- 4.rotateX rotateY rotateZ 判断旋转方向 -->
+    <!-- 4.1顺着轴的正方向看 顺时针旋转是负角度  逆时针旋转是正角度 -->
+    <!-- 5.过渡完成动画 -->
+    <!-- 6.通过jquery辅助操作 -->
+    <div class="box">
+        <ul class="imgBox">
+            <li>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </li>
+            <li>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </li>
+            <li>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </li>
+            <li>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </li>
+            <li>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </li>
+        </ul>
+        <a class="left" href="javascript:;">&lt;</a>
+        <a class="right" href="javascript:;">&gt;</a>
+    </div>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        // 1.点击切换图片
+        // 定义一个索引
+        // 看第二张图 -90deg 看第四张图 90deg
+
+        var index = 0;
+        // 节流阀
+        var flag = true;
+        // 2.点击左边按钮 上一张
+
+        $('.left').on('click', function() {
+            if (!flag) return false;
+            flag = false;
+            index--;
+            var angle = -index * 90;
+            $('li').css('transform', 'rotateX(' + angle + 'deg)').each(function(i, item) {
+                // 设置不同的延时
+                $(this).css('transition-delay', i * 0.1 + 's');
+            });
+        });
+        // 3.点击右边按钮 下一张
+        $('.right').on('click', function() {
+            if (!flag) return false;
+            flag = false;
+            index++;
+            var angle = -index * 90;
+            $('li').css('transform', 'rotateX(' + angle + 'deg)').each(function(i, item) {
+                // 设置不同的延时
+                $(this).css('transition-delay', i * 0.1 + 's');
+            });
+        });
+        // 4.优化  重复点击的时候动画会重叠执行   节流阀
+        $('li:last').on('transitionend', function() {
+            // 最后一张照片旋转结束
+            flag = true;
+        })
+    });
+    </script>
+</body>
+
+</html>
