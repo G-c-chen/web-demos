@@ -6,3 +6,4 @@
 - 5.[数据可视化-折线图](http://htmlpreview.github.io/?https://github.com/G-c-chen/web-demos/blob/master/line-chart/line-chart.html)
 - 6.[数据可视化-饼状图](http://htmlpreview.github.io/?https://github.com/G-c-chen/web-demos/blob/master/pieChart/index.html)
 - 7.[canvas-绘制帧动画](http://htmlpreview.github.io/?https://github.com/G-c-chen/web-demos/blob/master/canvas-frame-animation/index.html)
+- 8.[移动端之流式布局-京东案例](http://htmlpreview.github.io/?https://github.com/G-c-chen/web-demos/blob/master/jdM/index.html)
