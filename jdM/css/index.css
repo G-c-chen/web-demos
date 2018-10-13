@@ -22,7 +22,7 @@ body {
 
 .jd_search .jd_search_box {
     height: 40px;
-    background: rgba(201, 21, 35, 0.85);
+    background: rgba(201, 21, 35, 0);
     min-width: 320px;
     max-width: 640px;
     width: 100%;
@@ -229,13 +229,13 @@ body {
     color: #d8505c;
 }
 
-.sk .time {
+.sk .sk_time {
     float: left;
     margin-left: 10px;
 }
 
 /*TODO 设置height line-height 相等 文字不能垂直居中问题*/
-.sk .time span {
+.sk .sk_time span {
     float: left;
     width: 16px;
     height: 16px;
@@ -247,7 +247,7 @@ body {
     margin-top: 9px;
 }
 
-.sk .time span:nth-child(3n) {
+.sk .sk_time span:nth-child(3n) {
     background: #fff;
     width: 3px;
     color: #333;
