@@ -1,4 +1,0 @@
-var test = {
-  name: "bac",
-  site: [1, 2, 3]
-}

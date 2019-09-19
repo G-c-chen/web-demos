@@ -8,10 +8,14 @@ def spiderInfo(item):
   title = item.find('span').text
   rank = item.find('em').text
   rate = item.find(property="v:average").text
-  img = item.find('img')['src']
-  obj = {'rank': rank, 'title': title, 'rate': rate, 'img': img}
+  imgLink = item.find('img')['src']
+  obj = {'rank': rank, 'title': title, 'rate': rate, 'img': imgLink}
   print(obj)
   list.append(obj)
+  img = requests.get(imgLink)
+  # 保存图片
+  with open('./js-waterfall/spider/images/' + title + '.jpg', 'wb') as f:
+    f.write(img.content)
 
 def cycle(start):
   url = 'https://movie.douban.com/top250?start=' + str(start)
@@ -27,5 +31,5 @@ for i in range(0, 10):
     # for data in list:
     dict = { 'movie': list }
     # print(dict, 'dict')
-    f.write(json.dump(dict, ensure_ascii=False) + '\n')
+    f.write(json.dumps(dict, ensure_ascii=False) + '\n')
 
