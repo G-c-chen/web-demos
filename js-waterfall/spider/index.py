@@ -11,11 +11,14 @@ def spiderInfo(item):
   imgLink = item.find('img')['src']
   obj = {'rank': rank, 'title': title, 'rate': rate, 'img': imgLink}
   print(obj)
+  # 保存数据到txt文件
+  with open('js-waterfall/spider/movie.txt', 'a+', encoding='utf-8') as f:
+    f.write(json.dumps(obj, ensure_ascii=False) + '\n')
   list.append(obj)
   img = requests.get(imgLink)
   # 保存图片
-  with open('./js-waterfall/spider/images/' + title + '.jpg', 'wb') as f:
-    f.write(img.content)
+  # with open('./js-waterfall/spider/images/' + title + '.jpg', 'wb') as f:
+  #   f.write(img.content)
 
 def cycle(start):
   url = 'https://movie.douban.com/top250?start=' + str(start)
@@ -27,9 +30,10 @@ def cycle(start):
 
 for i in range(0, 10):
   cycle(i*25)
-  with open('./js-waterfall/spider/movie.json', 'a+', encoding='utf-8') as f:
-    # for data in list:
-    dict = { 'movie': list }
-    # print(dict, 'dict')
-    f.write(json.dumps(dict, ensure_ascii=False) + '\n')
+  
+# with open('js-waterfall/spider/movie.json', 'a+', encoding='utf-8') as f:
+  # for data in list:
+  # dict = { 'movie': list }
+  # print(dict, 'dict')
+  # f.write(json.dumps(dict, ensure_ascii=False) + '\n')
 
